@@ -21,6 +21,10 @@ let equals = document.querySelector('.equals');
 let clear = document.querySelector('.clear');
 let backSpace = document.querySelector('.backspace');
 
+//flag for numerical input
+let flag = false;
+let operationArr = [];
+
 function btnInputValues(int) {
     switch (int) {
         case 0: 
@@ -55,6 +59,7 @@ function btnInputValues(int) {
             break;
         case 10:
             input.value = input.value + '.';
+            console.log(input.value);
             break;
         case 11:
             input.value = input.value + '+';
@@ -146,44 +151,128 @@ function postFixEvaluator(arr) {
     return evalStack[0];
 }
 
+function isRepeatingDecimal(numerator, denominator) {
+    // Reduce the fraction first
+    const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+    const divisor = gcd(numerator, denominator);
+    denominator /= divisor;
+
+    // Remove all factors of 2
+    while (denominator % 2 === 0) {
+        denominator /= 2;
+    }
+
+    // Remove all factors of 5
+    while (denominator % 5 === 0) {
+        denominator /= 5;
+    }
+
+    // If what's left is 1, it's a finite decimal
+    return denominator !== 1;
+}
+
+
+function operationArray(element) {
+    operationArr.push(element);
+}
+
+function operationArrayEval(arr) {
+    if (arr[1] == '+') {
+        return (arr[0] + arr[2]);
+    } else if (arr[1] == '-') {
+        return (arr[0] - arr[2]);
+    } else if (arr[1] == '*') {
+        return (arr[0] * arr[2]);
+    } else if ((arr[1] == '/') && (Number(arr[2]) == 0)) {
+        return 'Infinity error';
+    } else if (arr[1] == '/') {
+        let result = arr[0] / arr[2];
+        if (isRepeatingDecimal(arr[0], arr[2])) {
+            return result.toFixed(5);
+        } else {
+            return result;
+        }
+    } 
+}
+
 
 zero.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(0);
 });
 
 one.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(1);
 });
 
 two.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(2);
 });
 
 three.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(3);
 });
 
 four.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(4);
 });
 
 five.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(5);
 });
 
 six.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(6);
 });
 
 seven.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(7);
 });
 
 eight.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(8);
 });
 
 nine.addEventListener('click', () => {
+    if (flag == true) {
+        input.value = '';
+    }
+    flag = false;
     btnInputValues(9);
 });
 
@@ -192,22 +281,53 @@ dot.addEventListener('click', () => {
 });
 
 plus.addEventListener('click', () => {
-    btnInputValues(11);
+    flag = true;
+    if (Number(input.value) % 1 != 0) {
+        // TODO: Implement Number conversion for the rest of the operations. 
+        // TODO: Please make this cleaner lol
+        operationArray(Number(input.value));
+        operationArray('+');
+    } else {
+        operationArray(Number(input.value));
+        operationArray('+');
+    }
 });
 
 minus.addEventListener('click', () => {
-    btnInputValues(12);
+    flag = true;
+    if (Number(input.value) % 1 != 0) {
+        operationArray(Number(input.value));
+        operationArray('-');
+    } else {
+        operationArray(Number(input.value));
+        operationArray('-');
+    }
 });
 
 times.addEventListener('click', () => {
-    btnInputValues(13);
+    flag = true;
+    if (Number(input.value) % 1 != 0) {
+        operationArray(Number(input.value));
+        operationArray('*');
+    } else {
+        operationArray(Number(input.value));
+        operationArray('*');
+    }
 });
 
 divide.addEventListener('click', () => {
-    btnInputValues(14);
+    flag = true;
+    if (Number(input.value) % 1 != 0) {
+        operationArray(Number(input.value));
+        operationArray('/');
+    } else {
+        operationArray(Number(input.value));
+        operationArray('/');
+    }
 });
 
 clear.addEventListener('click', () => {
+    flag=false;
     btnInputValues(15);
 });
 
@@ -216,7 +336,11 @@ backSpace.addEventListener('click', () => {
 });
 
 equals.addEventListener('click', () => {
-    input.value = postFixEvaluator(inFixEvaluator(input.value));
+    flag = true;
+    operationArray(Number(input.value));
+    console.log(operationArr);
+    input.value = operationArrayEval(operationArr);
+    operationArr = [];
 });
 
 

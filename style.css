@@ -13,7 +13,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: auto auto;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .buttons-container {
@@ -45,6 +47,9 @@ body {
     min-height: 70px;
     font-size: 40px;
     width: 300px;
+    pointer-events: none;
+    /*direction: rtl;*/
+    text-align: right;
 }
 
 .clear {
