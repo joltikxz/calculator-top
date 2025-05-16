@@ -177,11 +177,18 @@ function operationArray(element) {
 }
 
 function operationArrayEval(arr) {
+    let result;
     if (arr[1] == '+') {
         return (arr[0] + arr[2]);
     } else if (arr[1] == '-') {
         return (arr[0] - arr[2]);
     } else if (arr[1] == '*') {
+        result = arr[0] * arr[2];
+        if ((arr[0] * arr[2]) % 1 != 0) {
+            return result.toFixed(5);
+        } else {
+            return result;
+        }
         return (arr[0] * arr[2]);
     } else if ((arr[1] == '/') && (Number(arr[2]) == 0)) {
         return 'Infinity error';
