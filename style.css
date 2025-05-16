@@ -2,27 +2,33 @@
     box-sizing: border-box;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
+html, body {
     margin: 0;
-}
+    padding: 0;
+  }
+  
+  body {
+    min-height: 100vh;
+    display: flex; /* Ensure body is at least the viewport height */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
 .calc-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
+    height: fit-content;
+    padding: 15px;
+    background-color: rgb(104, 104, 104);
 }
 
 .buttons-container {
     display: flex;
     flex-wrap: wrap;
     max-width: 300px;
-    max-height: 300px;
     margin: 20px auto;
     justify-content: space-between;
     align-content: baseline;
