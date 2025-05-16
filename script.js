@@ -22,7 +22,7 @@ let clear = document.querySelector('.clear');
 let backSpace = document.querySelector('.backspace');
 
 //setting the background of equals button
-equals.style.backgroundColor = '#fbd535 ';
+//equals.style.backgroundColor = '#fbd535';
 
 //flag for numerical input
 let flag = false;
